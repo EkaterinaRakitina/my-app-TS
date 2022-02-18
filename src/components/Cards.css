@@ -1,0 +1,16 @@
+.card-group {
+  width: 90%;
+  margin: 0 auto;
+  justify-content: space-between;
+}
+
+.card-group > .card {
+  flex: 0 0 30%;
+}
+.card-group > .card:nth-last-of-type(n+4) {
+  margin-bottom: 20px;
+}
+
+.card-group>.card+.card {
+  border-left: 1px solid rgba(0,0,0,.125);
+}
