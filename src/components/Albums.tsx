@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAlbums } from "../app/albumSlice"; 
-import { getAlbums } from "../app/albumSlice";
+import { selectAlbums, getAlbums, Album } from "../app/albumSlice";
 import {
   CardGroup,
   Card,
@@ -11,35 +11,35 @@ import {
   CardText,
   Button,
 } from "reactstrap";
-import './Albums.css';
+import "./Albums.css";
+import { RootState } from "../app/store";
 
 const Albums: React.FC = () => {
   const dispatch = useDispatch();
-  const {albums} = useSelector(selectAlbums);
-  
-  console.log(albums);
-  
+  const albums = useSelector<RootState, Album[]>(selectAlbums);
 
-  useEffect(()=> {
+  // console.log(albums);
+
+  useEffect(() => {
     dispatch(getAlbums());
-  }, [])
+  }, [dispatch]);
 
   return (
     <CardGroup>
-      {albums.map((v: any, i: number)=> (
-        <Card key={v.id}>
-         <CardImg
-          alt="Card image cap"
-          src="https://picsum.photos/318/180"
-          top
-          width="100%"
+      {albums.map((album: Album, i: number) => (
+        <Card key={album.id}>
+          <CardImg
+            alt="Card image cap"
+            src="https://picsum.photos/318/180"
+            top
+            width="100%"
           />
           <CardBody>
             <CardTitle tag="h5">{`Album ${i + 1}`}</CardTitle>
-            <CardText>
-              {v.title}
-            </CardText>
-            <Button>Go to Album</Button>
+            <CardText>{album.title}</CardText>
+            <Link to={`/albums/${album.id}/photos`}>
+              <Button>Go to Album</Button>
+            </Link>
           </CardBody>
         </Card>
       ))}
