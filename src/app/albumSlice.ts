@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-// import axios from 'axios';
+import { RootState } from './store';
 
 export const getAlbums = createAsyncThunk(
   "albums/getAlbums",
@@ -9,14 +9,14 @@ export const getAlbums = createAsyncThunk(
   }
 );
 
-interface Card {
+export interface Album {
   userId: number;
   id: number;
   title: string;
 }
 
 interface InitialTypes {
-  albums: Card[];
+  albums: Album[];
   status: "loading" | "success" | "failed" | null;
 };
 
@@ -37,7 +37,6 @@ const albumSlice = createSlice({
     status: null
   },
   reducers: {},
-  // extraReducers: {
     extraReducers: (builder) => {
       builder
       .addCase(getAlbums.pending, (state: InitialTypes = initialState, action: albumAction) => {
@@ -47,6 +46,7 @@ const albumSlice = createSlice({
         state.status = "success";
         state.albums = action.payload
         // console.log(state.albums)
+        
       })
       .addCase(getAlbums.rejected, (state : InitialTypes = initialState, action: albumAction) => {
         state.status = "failed";
@@ -54,37 +54,7 @@ const albumSlice = createSlice({
   }
 });
 
-
-
-
-
-
-export const selectAlbums = (state : InitialTypes = initialState): any => state.albums;
+export const selectAlbums = (state : RootState): Album[] => state.albums.albums;
 
 // export const { getAlbums } = albumSlice.actions;
 export default albumSlice.reducer;
-
-
-
- 
-      // [getAlbums.pending]: (state : albumState = initialState, action: albumAction) => {
-      //   state.status = " loading"
-      // },
-      // [getAlbums.fullfield]: (state : albumState = initialState, action: albumAction) => {
-      //   state.status = "success";
-      //   state.albums = action.payload
-      // },
-      // [getAlbums.rejected]: (state : albumState = initialState, action: albumAction) => {
-      //   state.status = "failed";
-      // }
-      // getAlbums: (state : albumState = initialState, action: albumAction): albumState => {
-      //   return {albums: [], loading: true}
-      // }
-
-
-  // reducers: {},
-  // extraReducers: (builder) => {
-  //   builder.getCase(fetchAlbums.pending, (state : albumState = initialState, action: albumAction) => {
-  //     state.status = " loading"
-  //   })
-  // }
