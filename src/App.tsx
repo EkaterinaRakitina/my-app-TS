@@ -13,7 +13,7 @@ function App() {
             <Route path="/albums" element={<Albums />}/>
           </Routes>
           <Routes>
-            <Route path="/albums/:id/photos" element={<Photos />} />
+            <Route path="/albums/:id/*" element={<Photos />} />
           </Routes>
           <Routes>
             <Route path="/" element={<Navigate replace to="/albums" />} />

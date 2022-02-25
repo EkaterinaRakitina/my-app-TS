@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Routes, Route, Link } from "react-router-dom";
 import {
   CardGroup,
   Card,
@@ -15,20 +14,22 @@ import ModalWindow from "./Modalwindow";
 import { RootState } from "../app/store";
 import "./Photos.css";
 
+
 const Photos: React.FC = () => {
   const dispatch = useDispatch();
   const photos = useSelector<RootState, Photo[]>(selectPhotos);
   console.log(photos);
 
   const { id } = useParams<{ id: string }>();
-  console.log(useParams());
 
-  const [modal, setModal] = React.useState(false);
+  const [modalOpen, setModalOpen] = useState<null | { title: string, id: string, src: string} >(null);
+  const [currentPhoto, setCurrentPhoto] = useState<any>(true);
+  console.log(!!modalOpen);
 
   useEffect(() => {
-    // @ts-ignore
-    dispatch(getPhotos(id));
-  }, [dispatch, id]);
+    if (id) dispatch(getPhotos({ id }));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -43,18 +44,22 @@ const Photos: React.FC = () => {
             />
             <CardBody>
               <CardTitle tag="h5">{photo.title}</CardTitle>
-              <Link to={`/photos/${photo.id}/modal`}>
-                <Button>Show Image</Button>
-              </Link>
+                <Button onClick={() => setModalOpen({ id: ""+photo.id, title: photo.title, src: photo.url })}>Show Image</Button>
             </CardBody>
           </Card>
         ))}
       </CardGroup>
-      <Routes>
-        <Route path="/photos/:id/modal" element={<ModalWindow />} />
-      </Routes>
+      <ModalWindow {...currentPhoto} modalOpen={!!modalOpen} setModalOpen={setModalOpen} />
+      {/* <Routes>
+        <Route path="albums/:id/photos/*" element={<div>:KJGFDGDFGDFGD</div>} />
+        <Route path="albums/:id/photos/:photoId" element={<ModalWindow modalOpen={true} setModalOpen={setModalOpen} />} />
+      </Routes> */}
     </>
   );
 };
 
 export default Photos;
+
+
+// <Link to={`${location.pathname}/photos/${photo.id}`}>
+// </Link>

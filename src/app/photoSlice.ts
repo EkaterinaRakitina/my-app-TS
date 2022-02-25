@@ -3,8 +3,8 @@ import { RootState } from "./store";
 
 export const getPhotos = createAsyncThunk <Photo[], { id: string }, any>(
   "photos/getPhotos",
-  async(id, thunkAPI) => {
-    return await fetch(`http://jsonplaceholder.typicode.com/photos?albumId=${id}`)
+  async(params, thunkAPI) => {
+    return await fetch(`http://jsonplaceholder.typicode.com/photos?albumId=${params.id}`)
     .then(response => response.json());
   }
 );
@@ -18,6 +18,7 @@ export interface Photo {
   albumId: number;
   id: number;
   title: string;
+  url: any;
 };
 
 interface InitialTypes {

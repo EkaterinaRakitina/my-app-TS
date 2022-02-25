@@ -37,7 +37,7 @@ const Albums: React.FC = () => {
           <CardBody>
             <CardTitle tag="h5">{`Album ${i + 1}`}</CardTitle>
             <CardText>{album.title}</CardText>
-            <Link to={`/albums/${album.id}/photos`}>
+            <Link to={`/albums/${album.id}`}>
               <Button>Go to Album</Button>
             </Link>
           </CardBody>
