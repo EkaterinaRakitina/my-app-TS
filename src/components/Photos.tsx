@@ -23,7 +23,6 @@ const Photos: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
   const [modalOpen, setModalOpen] = useState<null | { title: string, id: string, src: string} >(null);
-  const [currentPhoto, setCurrentPhoto] = useState<any>(true);
   console.log(!!modalOpen);
 
   useEffect(() => {
@@ -49,7 +48,7 @@ const Photos: React.FC = () => {
           </Card>
         ))}
       </CardGroup>
-      <ModalWindow {...currentPhoto} modalOpen={!!modalOpen} setModalOpen={setModalOpen} />
+      <ModalWindow modalOpen={modalOpen} setModalOpen={setModalOpen} />
       {/* <Routes>
         <Route path="albums/:id/photos/*" element={<div>:KJGFDGDFGDFGD</div>} />
         <Route path="albums/:id/photos/:photoId" element={<ModalWindow modalOpen={true} setModalOpen={setModalOpen} />} />

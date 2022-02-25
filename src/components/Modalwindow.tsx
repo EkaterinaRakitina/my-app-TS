@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
+import "./Modalwindow.css";
 
 interface ModalProps {
   title?: string,
@@ -15,10 +16,12 @@ const goBack = () => {
   setModalOpen(null);
 }
 
+
+
   return (<>
-      <Modal isOpen={!!modalOpen} fullscreen="lg" toggle={() => setModalOpen(null)}>
-        <ModalHeader toggle={goBack}>{title}</ModalHeader>
-        <ModalBody><img src={src} alt="" /></ModalBody>
+      <Modal isOpen={!!modalOpen} toggle={goBack} fullscreen={true}>
+        <ModalHeader toggle={goBack}>{modalOpen?.title}</ModalHeader>
+       {modalOpen && <ModalBody><img src={modalOpen.src} alt="" /></ModalBody>}
         <ModalFooter>
           <Button onClick={goBack}>Cancel</Button>
         </ModalFooter>
